@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CsvCrud {
-    public static void main(String[] args){
+    public static void crud(){
         String file = "src\\ArchivosCSV\\usuarios.csv";
         
         BufferedReader reader = null;
