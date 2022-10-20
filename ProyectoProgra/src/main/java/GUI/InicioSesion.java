@@ -2,6 +2,8 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -12,13 +14,9 @@ import javax.swing.JTextField;
 //Para establecer posición los paramentros son x, y
 //Para establecer dimenciones los paremetros son anchura, altura
 
-public class InicioSesion extends javax.swing.JFrame{
-
-    public InicioSesion(){
-        iniciarElementos();
-    }
+public class InicioSesion extends JFrame{
     
-    private void iniciarElementos(){
+    public InicioSesion(String[][] contenedorUsuarios){
         //Crea la VENTANA de inicio de sesión y establece sus características
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
@@ -38,12 +36,16 @@ public class InicioSesion extends javax.swing.JFrame{
         TXT_USUARIO.setFont(new Font("Segoe UI Emoji", 3, 18));
         TXT_USUARIO.setText("Usuario");
         TXT_USUARIO.setBounds(60, 130, 100, 20);
-        TXT_USUARIO.setForeground(new Color(0, 0, 0));
+        TXT_USUARIO.setForeground(new Color(255, 255, 255));
+        
+        TXT_SESION_FALLIDA.setFont(new Font("Segoe UI Emoji", 3, 18));
+        TXT_SESION_FALLIDA.setBounds(5, 80, 400, 20);
+        TXT_SESION_FALLIDA.setForeground(new Color(255, 0, 0));
         
         TXT_CONTRASENA.setFont(new Font("Segoe UI Emoji", 3, 18));
         TXT_CONTRASENA.setText("Contraseña");
         TXT_CONTRASENA.setBounds(30, 200, 100, 20);
-        TXT_CONTRASENA.setForeground(new Color(0, 0, 0));
+        TXT_CONTRASENA.setForeground(new Color(255, 255, 255));
         
         BTN_INICIO.setFont(new Font("Segoe UI", 0, 14));
         BTN_INICIO.setText("Iniciar Sesión");
@@ -64,9 +66,35 @@ public class InicioSesion extends javax.swing.JFrame{
         CAMPO_CONTRASENA.setBackground(new Color(69, 73, 74));
         CAMPO_CONTRASENA.setBorder(null);
         
+        BTN_INICIO.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                String entradaNombreUsuario = CAMPO_USUARIO.getText();
+                String entradaContrasena = String.valueOf(CAMPO_CONTRASENA.getPassword());
+                boolean validacion = false;
+                
+                for (int i = 0; i <= contenedorUsuarios.length - 1; i++){
+                    if (contenedorUsuarios[i][1].equals(entradaNombreUsuario) && contenedorUsuarios[i][2].equals(entradaContrasena)){
+                        validacion = true;
+                        break;
+                    }
+                }
+
+                if (validacion){
+                    VENTANA.dispose();
+                }
+                else{
+                    TXT_SESION_FALLIDA.setText("El usuario y/o la contraseña son incorrectos");
+                    CAMPO_USUARIO.setText("");
+                    CAMPO_CONTRASENA.setText("");
+                }
+            }
+        });
+        
         //Añadir los elementos a la VENTANA
         VENTANA.add(CAMPO_USUARIO);
         VENTANA.add(BTN_INICIO);
+        VENTANA.add(TXT_SESION_FALLIDA);
         VENTANA.add(CAMPO_CONTRASENA);
         VENTANA.add(TXT_CONTRASENA);
         VENTANA.add(TXT_USUARIO);
@@ -74,6 +102,7 @@ public class InicioSesion extends javax.swing.JFrame{
         VENTANA.add(IMAGEN_FONDO);
         
     }
+    
     //Crea los elementos de la VENTANA de inicio de sesión
     private final String RUTA_IMAGEN = "src\\main\\java\\Imagenes\\FondoUno.jpg";
     
@@ -86,4 +115,5 @@ public class InicioSesion extends javax.swing.JFrame{
     private final JLabel TXT_NOMBRE_EMPRESA = new JLabel();
     private final JTextField CAMPO_USUARIO = new JTextField();
     private final JPasswordField CAMPO_CONTRASENA = new JPasswordField();
+    private final JLabel TXT_SESION_FALLIDA = new JLabel();
 }
