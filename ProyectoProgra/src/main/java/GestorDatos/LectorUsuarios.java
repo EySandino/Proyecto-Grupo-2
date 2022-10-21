@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Usuarios {
+public class LectorUsuarios {
     public static String[][] leerUsuarios() throws FileNotFoundException, IOException{
         //Lee los usuarios de un archivo externo y los guarda en una matriz
         

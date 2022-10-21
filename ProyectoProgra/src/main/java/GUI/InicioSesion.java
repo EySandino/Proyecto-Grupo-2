@@ -84,9 +84,9 @@ public class InicioSesion extends JFrame{
                     VENTANA.dispose();
                 }
                 else{
-                    TXT_SESION_FALLIDA.setText("El usuario y/o la contraseña son incorrectos");
                     CAMPO_USUARIO.setText("");
                     CAMPO_CONTRASENA.setText("");
+                    TXT_SESION_FALLIDA.setText("El usuario y/o la contraseña son incorrectos");
                 }
             }
         });
