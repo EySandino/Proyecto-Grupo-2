@@ -31,7 +31,6 @@ public class GestorUsuarios {
         String txtUsuarios = ""; //Almacena todo el contenido del archivo de usuarios (a excepción del encabezado)
         int contadorDatos = 1; //Cantidad de usuarios
         
-        lector.readLine(); //El primer dato es el cabezado. No es necesario añadirlo a la matriz
         txtUsuarios += lector.readLine(); //El primer usuario se almecena fuera del bucle
         
         //El bucle guarda los usuarios en al variable uno a uno. Se detiene cuando no hayan más usuarios por guardar

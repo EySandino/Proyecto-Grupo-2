@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 //Para establecer dimenciones los paremetros son anchura, altura
 
 public class InicioSesion extends JFrame{
-    
     public InicioSesion(String[][] contenedorUsuarios){
         //Crea la VENTANA de inicio de sesión y establece sus características
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -70,24 +69,19 @@ public class InicioSesion extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 String entradaNombreUsuario = CAMPO_USUARIO.getText();
-                String entradaContrasena = String.valueOf(CAMPO_CONTRASENA.getPassword());
-                boolean validacion = false;
+                String entradaContrasena = String.valueOf(CAMPO_CONTRASENA.getPassword());  
                 
                 for (int i = 0; i <= contenedorUsuarios.length - 1; i++){
                     if (contenedorUsuarios[i][1].equals(entradaNombreUsuario) && contenedorUsuarios[i][2].equals(entradaContrasena)){
-                        validacion = true;
+                        Menu ventanaMenu = new Menu(contenedorUsuarios[i]);
+                        VENTANA.dispose();
                         break;
                     }
                 }
 
-                if (validacion){
-                    VENTANA.dispose();
-                }
-                else{
-                    CAMPO_USUARIO.setText("");
-                    CAMPO_CONTRASENA.setText("");
-                    TXT_SESION_FALLIDA.setText("El usuario y/o la contraseña son incorrectos");
-                }
+                CAMPO_USUARIO.setText("");
+                CAMPO_CONTRASENA.setText("");
+                TXT_SESION_FALLIDA.setText("El usuario y/o la contraseña son incorrectos");
             }
         });
         
@@ -103,15 +97,15 @@ public class InicioSesion extends JFrame{
         
     }
     
-    //Crea los elementos de la VENTANA de inicio de sesión
+    //Crea los elementos de la ventana de inicio de sesión
     private final String RUTA_IMAGEN = "src\\main\\java\\Imagenes\\FondoUno.jpg";
     
     private final JFrame VENTANA = new JFrame();
     private final ImageIcon IMAGEN = new ImageIcon(RUTA_IMAGEN);
+    private final JLabel IMAGEN_FONDO = new JLabel();
     private final JLabel TXT_USUARIO = new JLabel();
     private final JButton BTN_INICIO = new JButton();
     private final JLabel TXT_CONTRASENA = new JLabel();
-    private final JLabel IMAGEN_FONDO = new JLabel();
     private final JLabel TXT_NOMBRE_EMPRESA = new JLabel();
     private final JTextField CAMPO_USUARIO = new JTextField();
     private final JPasswordField CAMPO_CONTRASENA = new JPasswordField();
