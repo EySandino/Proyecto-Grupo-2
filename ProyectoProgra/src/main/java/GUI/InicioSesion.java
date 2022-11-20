@@ -16,10 +16,11 @@ import javax.swing.JTextField;
 
 public class InicioSesion extends JFrame{
     public InicioSesion(String[][] contenedorUsuarios){
-        //Crea la VENTANA de inicio de sesión y establece sus características
+        //Crea la ventana de inicio de sesión y establece sus características
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
         VENTANA.setLocation(550, 100);
+        VENTANA.setTitle("Repuestos Fidelitas");
         VENTANA.setSize(404, 365);
         VENTANA.setVisible(true);
         
@@ -71,7 +72,7 @@ public class InicioSesion extends JFrame{
                 String entradaNombreUsuario = CAMPO_USUARIO.getText();
                 String entradaContrasena = String.valueOf(CAMPO_CONTRASENA.getPassword());  
                 
-                for (int i = 0; i <= contenedorUsuarios.length - 1; i++){
+                for (int i = 0; i < contenedorUsuarios.length; i++){
                     if (contenedorUsuarios[i][1].equals(entradaNombreUsuario) && contenedorUsuarios[i][2].equals(entradaContrasena)){
                         Menu ventanaMenu = new Menu(contenedorUsuarios[i]);
                         VENTANA.dispose();

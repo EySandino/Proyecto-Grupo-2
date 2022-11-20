@@ -1,11 +1,14 @@
 package Main;
 
+//Importar paquetes
 import GUI.InicioSesion;
-import GestorDatos.GestorUsuarios;
+import GestorCRUD.GestorDatos;
+
+//Importar excepciones
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-        InicioSesion inicioSesion = new InicioSesion(GestorUsuarios.leerUsuarios());
+        InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
     }
 }

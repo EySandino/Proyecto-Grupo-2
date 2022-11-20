@@ -7,6 +7,7 @@ public class Facturas extends JFrame{
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
         VENTANA.setLocation(550, 100);
+        VENTANA.setTitle("Generar Factura");
         VENTANA.setSize(620, 480);
         VENTANA.setVisible(true);
     }

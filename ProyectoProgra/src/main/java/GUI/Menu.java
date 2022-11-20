@@ -1,24 +1,31 @@
 package GUI;
 
-import GestorDatos.GestorUsuarios;
+//Importar paquetes
+import GestorCRUD.GestorDatos;
+
+//Importar Clases
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-//Para establecer posición los paramentros son x, y
-//Para establecer dimenciones los paremetros son anchura, altura
+
+//Importar excepciones
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Menu extends JFrame{
     public Menu(String[] usuario){
-        //Crea la VENTANA de inicio de sesión y establece sus características
+        //Crea la ventana de inicio de sesión y establece sus características
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
         VENTANA.setLocation(550, 100);
+        VENTANA.setTitle("Menu");
         VENTANA.setSize(620, 480);
         VENTANA.setVisible(true);
         
@@ -62,7 +69,9 @@ public class Menu extends JFrame{
         BTN_USUARIOS.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                Usuarios listaUsuarios = new Usuarios();
+                try {
+                    Usuarios listaUsuarios = new Usuarios();
+                } catch (IOException ex) {}
             }
         });
         
@@ -76,18 +85,23 @@ public class Menu extends JFrame{
         BTN_INVENTARIO.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                Inventario intentario = new Inventario();
+                try{
+                    Inventario inventario = new Inventario();
+                    VENTANA.dispose();
+                }
+                catch(IOException ex){}
             }
         });
         
         BTN_SALIR.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                try{
-                    InicioSesion inicioSesion = new InicioSesion(GestorUsuarios.leerUsuarios());
-                    VENTANA.dispose();
+                try {
+                    InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                catch(IOException d){}
+                VENTANA.dispose();
             }
         });
         
