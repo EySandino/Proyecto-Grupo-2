@@ -71,6 +71,7 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e){
                 try {
                     Usuarios listaUsuarios = new Usuarios();
+                    //VENTANA.dispose();
                 } catch (IOException ex) {}
             }
         });
@@ -87,7 +88,7 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e){
                 try{
                     Inventario inventario = new Inventario();
-                    VENTANA.dispose();
+                    //VENTANA.dispose();
                 }
                 catch(IOException ex){}
             }
