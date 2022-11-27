@@ -1,6 +1,8 @@
 package GUI;
 
+import java.util.Scanner;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Facturas extends JFrame{
     public Facturas(){
@@ -14,4 +16,18 @@ public class Facturas extends JFrame{
     //Crear factura y de clarar variables.
     //Prueba.
     private final JFrame VENTANA = new JFrame();
+    
+    public static void main(String[] args) {
+    Scanner Prod =  new Scanner(System.in); 
+    String nombre = " "; 
+    double Precio; 
+    int Cantidad;
+    double SubTotal; 
+    double Total; 
+    double IGV = 0.18; 
+    double descuento; 
+
+    JOptionPane.showInputDialog(" "); 
+    nombre=Prod.next();
+    }
 }
