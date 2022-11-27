@@ -11,6 +11,7 @@ public class Facturas extends JFrame{
         VENTANA.setSize(620, 480);
         VENTANA.setVisible(true);
     }
-    //Crear factura.
+    //Crear factura y de clarar variables.
+    //Prueba.
     private final JFrame VENTANA = new JFrame();
 }
