@@ -3,25 +3,26 @@ package GUI;
 //Importar paquetes
 import GestorCRUD.GestorDatos;
 
-//Importar Clases
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import javax.swing.ImageIcon;
+//Importar elementos de la ventana
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+
+//Importar caracteristicas de los elementos
+import java.awt.Font;
+import java.awt.Color;
+
+//Importar acciones de los botones
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //Importar excepciones
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Menu extends JFrame{
     public Menu(String[] usuario){
-        //Crea la ventana de inicio de sesión y establece sus características
+        //Configurar la ventana principal
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
         VENTANA.setLocation(550, 100);
@@ -29,10 +30,11 @@ public class Menu extends JFrame{
         VENTANA.setSize(620, 480);
         VENTANA.setVisible(true);
         
-        //Establecer las características de los elementos de la VENTANA
+        //Configurar la imagen de fonde de la ventana principal
         IMAGEN_FONDO.setIcon(IMAGEN);
         IMAGEN_FONDO.setSize(620, 420);
         
+        //Configurar los aspectos visuales de los botones
         BTN_USUARIOS.setFont(new Font("Segoe UI", 0, 14));
         BTN_USUARIOS.setText("Lista de Usuarios");
         BTN_USUARIOS.setBounds(420, 60, 160, 40);
@@ -65,13 +67,13 @@ public class Menu extends JFrame{
         BTN_SALIR.setBorder(null);
         BTN_SALIR.setFocusable(false);
         
-        //Establecer las acctiones de los botones
+        //Configurar las acctiones de los botones
         BTN_USUARIOS.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 try {
-                    Usuarios listaUsuarios = new Usuarios();
-                    //VENTANA.dispose();
+                    Tabla ventanaUsuarios = new Tabla("usuarios");
+                    VENTANA.dispose();
                 } catch (IOException ex) {}
             }
         });
@@ -79,7 +81,7 @@ public class Menu extends JFrame{
         BTN_FACTURA.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                Facturas generarVenta = new Facturas();
+                Facturas ventanaFactura = new Facturas();
             }
         });
         
@@ -87,8 +89,8 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Inventario inventario = new Inventario();
-                    //VENTANA.dispose();
+                    Tabla ventanaInventario = new Tabla("inventario");
+                    VENTANA.dispose();
                 }
                 catch(IOException ex){}
             }
@@ -99,14 +101,12 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e){
                 try {
                     InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
-                } catch (IOException ex) {
-                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } catch (IOException ex) {}
                 VENTANA.dispose();
             }
         });
         
-        //Añadir los elementos a la VENTANA
+        //Agregar elementos a la ventana
         VENTANA.add(BTN_USUARIOS);
         VENTANA.add(BTN_FACTURA);
         VENTANA.add(BTN_INVENTARIO);
@@ -114,14 +114,18 @@ public class Menu extends JFrame{
         VENTANA.add(IMAGEN_FONDO);
     }
     
-    //Crea los elementos de la ventana de menú
-    private final String RUTA_IMAGEN = "src\\main\\java\\Imagenes\\Azul.jpg";
-    
+    //Ventana principal
     private final JFrame VENTANA = new JFrame();
-    private final ImageIcon IMAGEN = new ImageIcon(RUTA_IMAGEN);
+    
+    //Imagen de fondo
     private final JLabel IMAGEN_FONDO = new JLabel();
-    private final JButton BTN_USUARIOS = new JButton();
-    private final JButton BTN_FACTURA = new JButton();
-    private final JButton BTN_INVENTARIO = new JButton();
+    private final String RUTA_IMAGEN = GestorDatos.getImagenDos();
+    private final ImageIcon IMAGEN = new ImageIcon(RUTA_IMAGEN);
+    
+    //Botones
     private final JButton BTN_SALIR = new JButton();
+    private final JButton BTN_FACTURA = new JButton();
+    private final JButton BTN_USUARIOS = new JButton();
+    private final JButton BTN_INVENTARIO = new JButton();
+    
 }

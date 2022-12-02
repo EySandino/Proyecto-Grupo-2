@@ -1,24 +1,43 @@
 
 package GestorCRUD;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+//Importar Lectores
 import java.io.FileReader;
+import java.io.BufferedReader;
+
+//Importar escritor
 import java.io.FileWriter;
+
+//Import excepciones
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class GestorDatos {
     //Archivo donde se almacenan los usuarios
     private static final String RUTA_USUARIOS = "src\\main\\java\\ArchivosCSV\\usuarios.csv"; 
-    //Archivo donde se almacena el inventario
+    //Archivo donde se almacenan los elementos del inventario
     private static final String RUTA_INVENTARIO = "src\\main\\java\\ArchivosCSV\\inventario.csv";
     
+    //Obtener la ruta de los archivos
     public static String getRutaUsuarios(){
         return RUTA_USUARIOS;
     }
-    
+
     public static String getRutaInventario(){
         return RUTA_INVENTARIO;
+    }
+    
+    //Rutas de las imagenes de fondo
+    private static final String IMAGEN_UNO = "src\\main\\java\\Imagenes\\FondoUno.jpg";
+    private static final String IMAGEN_DOS = "src\\main\\java\\Imagenes\\FondoDos.jpg";
+    
+    //Obtener la ruta de las imagenes
+    public static String getImagenUno(){
+        return IMAGEN_UNO;
+    }
+
+    public static String getImagenDos(){
+        return IMAGEN_DOS;
     }
     
 //    public static void crearDatos(String nombre, String contrasena, String rol) throws FileNotFoundException, IOException{
@@ -36,41 +55,41 @@ public class GestorDatos {
 //        escritor.close();
 //    }
     
-    //Lee los usuarios de un archivo externo y los guarda en una matriz
+    //Lee los usuarios de un archivo externo y los almacena en un vector de dos dimensiones
     public static String[][] leerDatos(String ruta) throws FileNotFoundException, IOException{
-        BufferedReader lector = new BufferedReader(new FileReader(ruta));
+        BufferedReader lectorDatos = new BufferedReader(new FileReader(ruta));
         
-        //Almacena todo el contenido del archivo de usuarios (a excepción del encabezado)
+        //Almacena todo el contenido del archivo
         String txtDatos = "";
         
-        //Cantidad de usuarios
+        //Cantidad de datos en el archivo CSV
         int contadorDatos = 0;
         
-        //Almacena una línea del texto, la cual es un usuario con sus atributos
+        //Lee una linea de texto del archivo original a la vez
         String usuario;
         
-        //El bucle guarda los usuarios en al variable uno a uno. Se detiene cuando no hayan más usuarios por guardar
-        while((usuario = lector.readLine()) != null){
+        //Almacena todas las lineas de texto en la variable txtDatos una a la vez. Se detiene cuando no hayan mas lineas de texto por almacenar
+        while((usuario = lectorDatos.readLine()) != null){
             if (txtDatos.equals("")){
                 txtDatos += usuario;
             }
             else{
                 txtDatos += "\n" + usuario;
             }
+            
             contadorDatos ++;
         }
         
-        //Lista de datos
+        //Vector en el que el contenido de txtDatos sera almacenado 
         String[][] contenedorDatos = new String[contadorDatos][];
         
-        //Añadir cada dato individual a la lista
+        //Se agrega una linea de text a la vez al vector en forma de vector unidimensional
         for(int i = 0; i < contadorDatos; i++){
             contenedorDatos[i] = txtDatos.split("\n")[i].split(",");
         }
         
-        //Cerrar el lector y enviar el resultado
-        lector.close();
-        
+        //Cerrar el lector y retornar el resultado
+        lectorDatos.close();
         return contenedorDatos;
     }
     
