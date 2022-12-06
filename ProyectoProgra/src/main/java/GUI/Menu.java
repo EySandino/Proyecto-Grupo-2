@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class Menu extends JFrame{
-    public Menu(String[] usuario){
+    public Menu(String nombre){
         //Configurar la ventana principal
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
@@ -33,6 +33,12 @@ public class Menu extends JFrame{
         //Configurar la imagen de fonde de la ventana principal
         IMAGEN_FONDO.setIcon(IMAGEN);
         IMAGEN_FONDO.setSize(620, 420);
+        
+        //Configurar los aspectos visuales de las etiquetas de texto
+        TXT_BIENVENIDA.setFont(new Font("Segoe UI Emoji", 3, 18));
+        TXT_BIENVENIDA.setText("Bienvenido(a) " + nombre + "!");
+        TXT_BIENVENIDA.setBounds(0, 0, 300, 20);
+        TXT_BIENVENIDA.setForeground(new Color(255, 0, 0));
         
         //Configurar los aspectos visuales de los botones
         BTN_USUARIOS.setFont(new Font("Segoe UI", 0, 14));
@@ -78,12 +84,12 @@ public class Menu extends JFrame{
             }
         });
         
-        BTN_FACTURA.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                Facturas ventanaFactura = new Facturas();
-            }
-        });
+//        BTN_FACTURA.addActionListener(new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent e){
+//                Facturas ventanaFactura = new Facturas();
+//            }
+//        });
         
         BTN_INVENTARIO.addActionListener(new ActionListener(){
             @Override
@@ -107,6 +113,7 @@ public class Menu extends JFrame{
         });
         
         //Agregar elementos a la ventana
+        VENTANA.add(TXT_BIENVENIDA);
         VENTANA.add(BTN_USUARIOS);
         VENTANA.add(BTN_FACTURA);
         VENTANA.add(BTN_INVENTARIO);
@@ -121,6 +128,9 @@ public class Menu extends JFrame{
     private final JLabel IMAGEN_FONDO = new JLabel();
     private final String RUTA_IMAGEN = GestorDatos.getImagenDos();
     private final ImageIcon IMAGEN = new ImageIcon(RUTA_IMAGEN);
+    
+    //Etiquetas de texto
+    private final JLabel TXT_BIENVENIDA = new JLabel();
     
     //Botones
     private final JButton BTN_SALIR = new JButton();

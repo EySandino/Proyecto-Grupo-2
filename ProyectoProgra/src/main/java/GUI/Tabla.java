@@ -2,6 +2,7 @@ package GUI;
 
 //Importar paquetes
 import GestorCRUD.GestorDatos;
+import GestorCRUD.Usuario;
 
 //Importar excepciones
 import java.io.IOException;
@@ -23,6 +24,7 @@ import javax.swing.JLabel;
 public class Tabla extends JFrame{
     
     public Tabla(String datosTabla) throws IOException{
+        
         //Configurar la ventana principal
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
@@ -103,10 +105,32 @@ public class Tabla extends JFrame{
         BTN_SALIR.setFocusable(false);
         
         //Configurar las acctiones de los botones
+        BTN_AGREGAR.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                EntradaDatos ventanaEntrada = new EntradaDatos(datosTabla);
+                VENTANA.dispose();
+            }
+        });
+        
+        BTN_MODIFICAR.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                
+            }
+        });
+        
+        BTN_ELIMINIAR.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                
+            }
+        });
+        
         BTN_SALIR.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                Menu ventanaMenu = new Menu(ENCABEZADO_INVENTARIO);
+                Menu ventanaMenu = new Menu(Usuario.getNombreUsuario());
                 VENTANA.dispose();
             }
         });

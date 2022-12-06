@@ -1,6 +1,7 @@
 package GUI;
 
 //Importar paquetes
+import GestorCRUD.Usuario;
 import GestorCRUD.GestorDatos;
 
 //Importar elementos de la ventana
@@ -25,7 +26,7 @@ public class InicioSesion extends JFrame{
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
         VENTANA.setLocation(550, 100);
-        VENTANA.setTitle("Repuestos Fidelitas");
+        VENTANA.setTitle("Fide Componentes");
         VENTANA.setSize(404, 365);
         VENTANA.setVisible(true);
         
@@ -34,9 +35,9 @@ public class InicioSesion extends JFrame{
         IMAGEN_FONDO.setSize(700, 700);
         
         //Configurar los aspectos visuales de las etiquetas de texto
-        TXT_NOMBRE_EMPRESA.setFont(new Font("Serif", 3, 36));
-        TXT_NOMBRE_EMPRESA.setText("Repuestos Fidélitas");
-        TXT_NOMBRE_EMPRESA.setBounds(50, 20, 300, 50);
+        TXT_NOMBRE_EMPRESA.setFont(new Font("Serif", 3, 30));
+        TXT_NOMBRE_EMPRESA.setText("Fide Componentes");
+        TXT_NOMBRE_EMPRESA.setBounds(80, 20, 300, 50);
         TXT_NOMBRE_EMPRESA.setForeground(new Color(0, 0, 0));
         
         TXT_USUARIO.setFont(new Font("Segoe UI Emoji", 3, 18));
@@ -69,12 +70,12 @@ public class InicioSesion extends JFrame{
         BTN_INICIO.setFont(new Font("Segoe UI", 0, 14));
         BTN_INICIO.setText("Iniciar Sesión");
         BTN_INICIO.setBounds(140, 260, 130, 34);
-        BTN_INICIO.setForeground(new Color(0, 0, 0));
+        BTN_INICIO.setForeground(new Color(255, 255, 255));
         BTN_INICIO.setBackground(new Color(69, 73, 74));
         BTN_INICIO.setBorder(null);
         BTN_INICIO.setFocusable(false);
         
-        //Configurar la acion del boton de inicio de sesion
+        //Configurar la accion del boton de inicio de sesion
         BTN_INICIO.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -85,8 +86,12 @@ public class InicioSesion extends JFrame{
                 //Lee los usuarios existentes de uno en uno para verificar las credenciales del usuario
                 for (int i = 0; i < contenedorUsuarios.length; i++){
                     if (contenedorUsuarios[i][1].equals(entradaNombreUsuario) && contenedorUsuarios[i][2].equals(entradaContrasena)){
-                        Menu ventanaMenu = new Menu(contenedorUsuarios[i]);
+                        Usuario.setNombreUsuario(contenedorUsuarios[i][1]);
+                        Usuario.setRolUsuario(contenedorUsuarios[i][3]);
+                        
+                        Menu ventanaMenu = new Menu(Usuario.getNombreUsuario());
                         VENTANA.dispose();
+                        
                         break;
                     }
                 }
