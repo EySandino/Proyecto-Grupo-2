@@ -8,7 +8,10 @@ import GestorCRUD.GestorDatos;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException{
-        InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
+    public static void main(String[] args){
+        try {
+            InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
+        }
+        catch (IOException ex){}
     }
 }

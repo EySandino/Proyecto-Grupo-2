@@ -4,6 +4,7 @@ package Main;
 import java.util.Random;
 
 public class Helper {
+    //Crea un ID para cuando el usuario crea un usuario o un elemento para el inventario
     public static String crearID(String tipoDato){
         if (tipoDato.equals("inventario")){
             Random generador = new Random();
@@ -12,7 +13,7 @@ public class Helper {
             for (int i = 0; i < 5; i++){
                 boolean usarLetra;
                 
-                if ((usarLetra = generador.nextBoolean()) == true){
+                if (usarLetra = generador.nextBoolean()){
                     contenedor += (char) (generador.nextInt(26) + 65);
                 }
                 else {
@@ -26,7 +27,7 @@ public class Helper {
             return String.valueOf((int) (Math.random() * 1000));
         }
         else {
-            return "";
+            return null;
         }
     }
 }

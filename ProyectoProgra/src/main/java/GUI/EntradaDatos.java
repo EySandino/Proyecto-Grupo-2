@@ -4,20 +4,25 @@ package GUI;
 import GestorCRUD.GestorDatos;
 
 //Importar clases
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.Color;
+
+//Importar eventos de los botones
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+//Importar excepciones
 import java.io.IOException;
-import javax.swing.ImageIcon;
+
+//Importar elementos de la ventana
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import javax.swing.JPasswordField;
 
 public class EntradaDatos extends JFrame{
     
@@ -33,7 +38,7 @@ public class EntradaDatos extends JFrame{
         if (tipoDato.equals("inventario")){
             VENTANA.setTitle("Agregar componente");
         }
-        else if (tipoDato.equals("usuarios")){
+        else if (tipoDato.equals("usuario")){
             VENTANA.setTitle("Agregar usuario");
         }
         
@@ -168,9 +173,9 @@ public class EntradaDatos extends JFrame{
                         JOptionPane.showMessageDialog(null, "Datos agregados exitosamente!", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
                         
                         VENTANA.dispose();
-                        Tabla ventanaInventario = new Tabla("inventario");
+                        Tabla ventanaInventario = new Tabla(GestorDatos.INVENTARIO);
                     }
-                    else if (tipoDato.equals("usuarios")){
+                    else if (tipoDato.equals("usuario")){
                         String nombre = CAMPO_NOMBRE.getText();
                         String rol = String.valueOf(MENU_DESPLEGUABLE.getSelectedItem());
                         String contrasena = String.valueOf(CAMPO_CONTRASENA.getPassword());
@@ -185,7 +190,7 @@ public class EntradaDatos extends JFrame{
                             JOptionPane.showMessageDialog(null, "Datos agregados exitosamente!", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
                             
                             VENTANA.dispose();
-                            Tabla ventanaInventario = new Tabla("usuarios");
+                            Tabla ventanaInventario = new Tabla(GestorDatos.USUARIO);
                         }
                         else{
                             CAMPO_NOMBRE.setText("");
@@ -212,11 +217,11 @@ public class EntradaDatos extends JFrame{
                 try {
                     if (tipoDato.equals("inventario")){
                         VENTANA.dispose();
-                        Tabla ventanaInventario = new Tabla("inventario");
+                        Tabla ventanaInventario = new Tabla(GestorDatos.INVENTARIO);
                     }
-                    else if (tipoDato.equals("usuarios")){
+                    else if (tipoDato.equals("usuario")){
                         VENTANA.dispose();
-                        Tabla ventanaInventario = new Tabla("usuarios");
+                        Tabla ventanaInventario = new Tabla(GestorDatos.USUARIO);
                     }
                 }
                 catch (IOException ex){}
@@ -224,7 +229,7 @@ public class EntradaDatos extends JFrame{
         });
 
         //Agregar los elementos a la ventana principal
-        if (tipoDato.equals("usuarios")){
+        if (tipoDato.equals("usuario")){
             VENTANA.add(TXT_NOMBRE);
             VENTANA.add(CAMPO_NOMBRE);
             VENTANA.add(TXT_CONTRASENA);

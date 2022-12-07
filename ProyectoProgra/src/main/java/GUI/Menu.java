@@ -78,7 +78,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 try {
-                    Tabla ventanaUsuarios = new Tabla("usuarios");
+                    Tabla ventanaUsuarios = new Tabla(GestorDatos.USUARIO);
                     VENTANA.dispose();
                 } catch (IOException ex) {}
             }
@@ -95,7 +95,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 try{
-                    Tabla ventanaInventario = new Tabla("inventario");
+                    Tabla ventanaInventario = new Tabla(GestorDatos.INVENTARIO);
                     VENTANA.dispose();
                 }
                 catch(IOException ex){}

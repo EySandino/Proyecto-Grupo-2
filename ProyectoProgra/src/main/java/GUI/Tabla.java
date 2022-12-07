@@ -36,7 +36,7 @@ public class Tabla extends JFrame{
         if (datosTabla.equals("inventario")){
             VENTANA.setTitle("Inventario");
         }
-        else if (datosTabla.equals("usuarios")){
+        else if (datosTabla.equals("usuario")){
             VENTANA.setTitle("Usuarios");
         }
         
@@ -59,7 +59,7 @@ public class Tabla extends JFrame{
             //Encabezado del inventario
             encabezado = ENCABEZADO_INVENTARIO;
         }
-        else if (datosTabla.equals("usuarios")){
+        else if (datosTabla.equals("usuario")){
             //Elementos del inventario
             elementosTabla = GestorDatos.leerDatos(GestorDatos.getRutaUsuarios());
 

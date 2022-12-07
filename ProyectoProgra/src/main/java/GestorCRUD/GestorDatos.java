@@ -7,7 +7,6 @@ import Main.Helper;
 //Importar Lectores
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 
 //Importar escritor
 import java.io.FileWriter;
@@ -16,11 +15,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.RuntimeException;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 public class GestorDatos {
+    //Constantes publicas
+    public static final String INVENTARIO = "inventario";
+    public static final String USUARIO = "usuario";
+    
     //Archivo donde se almacenan los usuarios
-    private static final String RUTA_USUARIOS = "src\\main\\java\\ArchivosCSV\\usuarios.csv"; 
+    private static final String RUTA_USUARIOS = "src\\main\\java\\ArchivosCSV\\usuarios.csv";
     //Archivo donde se almacenan los elementos del inventario
     private static final String RUTA_INVENTARIO = "src\\main\\java\\ArchivosCSV\\inventario.csv";
     
@@ -57,13 +59,12 @@ public class GestorDatos {
         String ruta = "";
         if (tipoDato.equals("inventario")){
             ruta = getRutaInventario();
-
         }
         else if (tipoDato.equals("usuario")){
             ruta = getRutaUsuarios();
         }
         
-        //Crear el escritor y la tabla de archivos existentes
+        //Crear el escritor y la tabla de archivos existentes. El escritor elimina todos los elementos del archivo existente
         String[][] listaDatos = leerDatos(ruta);
         FileWriter escritor = new FileWriter(ruta);
         
@@ -108,17 +109,11 @@ public class GestorDatos {
     //Lee los usuarios de un archivo externo y los almacena en un vector de dos dimensiones
     public static String[][] leerDatos(String ruta) throws FileNotFoundException, IOException{
         BufferedReader lectorDatos = new BufferedReader(new FileReader(ruta));
-        
-        //Almacena todo el contenido del archivo
         String txtDatos = "";
-        
-        //Cantidad de datos en el archivo CSV
-        int contadorDatos = 0;
-        
-        //Lee una linea de texto del archivo original a la vez
-        String usuario;
-        
+
         //Almacena todas las lineas de texto en la variable txtDatos una a la vez. Se detiene cuando no hayan mas lineas de texto por almacenar
+        String usuario;
+        int contadorDatos = 0; //Cantidad de datos en el archivo CSV
         while((usuario = lectorDatos.readLine()) != null){
             if (txtDatos.equals("")){
                 txtDatos += usuario;
@@ -130,10 +125,8 @@ public class GestorDatos {
             contadorDatos ++;
         }
         
-        //Vector en el que el contenido de txtDatos sera almacenado 
-        String[][] contenedorDatos = new String[contadorDatos][];
-        
-        //Se agrega una linea de text a la vez al vector en forma de vector unidimensional
+        //Se agrega una linea de text a la vez al vector
+        String[][] contenedorDatos = new String[contadorDatos][]; //Vector en el que el contenido de txtDatos sera almacenado
         for(int i = 0; i < contadorDatos; i++){
             contenedorDatos[i] = txtDatos.split("\n")[i].split(",");
         }
@@ -155,9 +148,10 @@ public class GestorDatos {
             ruta = getRutaUsuarios();
         }
         
-        FileWriter escritor = new FileWriter(ruta);
         String[][] listaDatos = leerDatos(ruta);
+        FileWriter escritor = new FileWriter(ruta);
 
+        //Se determina cual es el elemento que se debe eliminar
         int indiceDatoEliminado;
         for (int i = 0; i < listaDatos.length; i++){
             if (id.equals(listaDatos[i][0])){
@@ -165,6 +159,7 @@ public class GestorDatos {
             }
         }
         
+        //Se elimina el elemento seleccionado. En caso de que el id no coincida con ningun dato, la funciona retorna el valor false
         try {
             String contenedor = "";
             for (int i = 0; i < listaDatos.length; i++){
@@ -179,9 +174,11 @@ public class GestorDatos {
                         else {
                             contenedor += listaDatos[i][j];
                         }
+                        
+                        if (i != listaDatos.length - 1){
+                            contenedor += "\n";
+                        }
                     }
-                    
-                    contenedor += "\n";
                 }
             }
             
@@ -190,7 +187,7 @@ public class GestorDatos {
             escritor.close();
             return true;
         }
-        catch (RuntimeException e){
+        catch (RuntimeException ex){
             escritor.close();
             return false;
         }
