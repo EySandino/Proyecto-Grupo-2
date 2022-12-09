@@ -57,6 +57,18 @@ public class Facturas extends JFrame {
         CAMPO_ID.setBackground(new Color(70, 73, 75));
         CAMPO_ID.setBorder(null);
 
+        CAMPO_TELEFONO.setFont(new Font("Segoe UI", 0, 14));
+        CAMPO_TELEFONO.setBounds(180, 170, 1, 31);
+        CAMPO_TELEFONO.setForeground(new Color(187, 187, 187));
+        CAMPO_TELEFONO.setBackground(new Color(70, 73, 75));
+        CAMPO_TELEFONO.setBorder(null);
+
+        CAMPO_CORREO.setFont(new Font("Segoe UI", 0, 14));
+        CAMPO_CORREO.setBounds(220, 220, 160, 31);
+        CAMPO_CORREO.setForeground(new Color(187, 187, 187));
+        CAMPO_CORREO.setBackground(new Color(70, 73, 75));
+        CAMPO_CORREO.setBorder(null);
+
     }
 
     //Crear factura y de clarar variables.
@@ -70,8 +82,10 @@ public class Facturas extends JFrame {
     private final JLabel TXT_ID = new JLabel();
     private final JTextField CAMPO_CLIENTE = new JTextField();
     private final JTextField CAMPO_ID = new JTextField();
-    
+
     private final JLabel TXT_TELEFONO = new JLabel();
     private final JLabel TXT_CORREO = new JLabel();
+    private final JTextField CAMPO_TELEFONO = new JTextField();
+    private final JTextField CAMPO_CORREO = new JTextField();
 
 }
