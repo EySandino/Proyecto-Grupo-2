@@ -24,6 +24,7 @@ public class Facturas extends JFrame {
         IMAGEN_FONDO.setIcon(IMAGEN);
         IMAGEN_FONDO.setSize(700, 700);
 
+        // Texto de los datos
         TXT_CLIENTE.setFont(new Font("Serif", 3, 18));
         TXT_CLIENTE.setText("Nombre de Cliente :");
         TXT_CLIENTE.setBounds(50, 70, 150, 40);
