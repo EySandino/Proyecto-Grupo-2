@@ -69,6 +69,16 @@ public class Facturas extends JFrame {
         CAMPO_CORREO.setBackground(new Color(70, 73, 75));
         CAMPO_CORREO.setBorder(null);
 
+        //Añadir los elementos a la VENTANA
+        VENTANA.add(CAMPO_CLIENTE);
+        VENTANA.add(CAMPO_ID);
+        VENTANA.add(CAMPO_TELEFONO);
+        VENTANA.add(CAMPO_CORREO);
+
+        VENTANA.add(TXT_CLIENTE);
+        VENTANA.add(TXT_ID);
+        VENTANA.add(TXT_TELEFONO);
+        VENTANA.add(TXT_CORREO);
     }
 
     //Crear factura y de clarar variables.
