@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class Facturas extends JFrame {
 
@@ -33,18 +34,30 @@ public class Facturas extends JFrame {
         TXT_ID.setBounds(50, 120, 150, 40);
         TXT_ID.setForeground(new Color(255, 255, 255));
 
+        CAMPO_CLIENTE.setFont(new Font("Segoe UI", 0, 14));
+        CAMPO_CLIENTE.setBounds(220, 70, 160, 31);
+        CAMPO_CLIENTE.setForeground(new Color(187, 187, 187));
+        CAMPO_CLIENTE.setBackground(new Color(70, 73, 75));
+        CAMPO_CLIENTE.setBorder(null);
+
+        CAMPO_ID.setFont(new Font("Segoe UI", 0, 14));
+        CAMPO_ID.setBounds(220, 120, 160, 31);
+        CAMPO_ID.setForeground(new Color(187, 187, 187));
+        CAMPO_ID.setBackground(new Color(70, 73, 75));
+        CAMPO_ID.setBorder(null);
 
     }
+
     //Crear factura y de clarar variables.
-    //Prueba.
-    
     private final String RUTA_IMAGEN = "src\\main\\java\\Imagenes\\FondoUno.jpg";
-    
+
     private final JFrame VENTANA = new JFrame();
     private final ImageIcon IMAGEN = new ImageIcon(RUTA_IMAGEN);
     private final JLabel IMAGEN_FONDO = new JLabel();
-    
+
     private final JLabel TXT_CLIENTE = new JLabel();
     private final JLabel TXT_ID = new JLabel();
-    
+    private final JTextField CAMPO_CLIENTE = new JTextField();
+    private final JTextField CAMPO_ID = new JTextField();
+
 }
