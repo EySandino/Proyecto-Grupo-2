@@ -35,6 +35,16 @@ public class Facturas extends JFrame {
         TXT_ID.setBounds(50, 120, 150, 40);
         TXT_ID.setForeground(new Color(255, 255, 255));
 
+        TXT_TELEFONO.setFont(new Font("Serif", 3, 18));
+        TXT_TELEFONO.setText("Número de Teléfono :");
+        TXT_TELEFONO.setBounds(50, 170, 170, 40);
+        TXT_TELEFONO.setForeground(new Color(255, 255, 255));
+
+        TXT_CORREO.setFont(new Font("Serif", 3, 18));
+        TXT_CORREO.setText("Correo Electrónico :");
+        TXT_CORREO.setBounds(50, 220, 160, 40);
+        TXT_CORREO.setForeground(new Color(255, 255, 255));
+
         CAMPO_CLIENTE.setFont(new Font("Segoe UI", 0, 14));
         CAMPO_CLIENTE.setBounds(220, 70, 160, 31);
         CAMPO_CLIENTE.setForeground(new Color(187, 187, 187));
@@ -60,5 +70,8 @@ public class Facturas extends JFrame {
     private final JLabel TXT_ID = new JLabel();
     private final JTextField CAMPO_CLIENTE = new JTextField();
     private final JTextField CAMPO_ID = new JTextField();
+    
+    private final JLabel TXT_TELEFONO = new JLabel();
+    private final JLabel TXT_CORREO = new JLabel();
 
 }
