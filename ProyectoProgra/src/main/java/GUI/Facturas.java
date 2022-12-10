@@ -2,16 +2,15 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Scanner;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class Facturas extends JFrame {
 
-    public Facturas(String[][] Factura) {
+    public Facturas() {
 
         //Creación de la ventana
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -68,6 +67,14 @@ public class Facturas extends JFrame {
         CAMPO_CORREO.setForeground(new Color(187, 187, 187));
         CAMPO_CORREO.setBackground(new Color(70, 73, 75));
         CAMPO_CORREO.setBorder(null);
+        
+        BTN_REGRESAR.setFont(new Font("Segoe UI", 0, 18));
+        BTN_REGRESAR.setText("Regreasar a Menú");
+        BTN_REGRESAR.setBounds(330, 434, 130, 34);
+        BTN_REGRESAR.setForeground(new Color(187,187,187));
+        BTN_REGRESAR.setBackground(new Color(78,80,82));
+        BTN_REGRESAR.setBorder(null);
+        BTN_REGRESAR.setFocusable(false);
 
         //Añadir los elementos a la VENTANA
         VENTANA.add(CAMPO_CLIENTE);
@@ -79,6 +86,8 @@ public class Facturas extends JFrame {
         VENTANA.add(TXT_ID);
         VENTANA.add(TXT_TELEFONO);
         VENTANA.add(TXT_CORREO);
+        
+        VENTANA.add(BTN_REGRESAR);
     }
 
     //Crear factura y de clarar variables.
@@ -98,4 +107,5 @@ public class Facturas extends JFrame {
     private final JTextField CAMPO_TELEFONO = new JTextField();
     private final JTextField CAMPO_CORREO = new JTextField();
 
+    private final JButton BTN_REGRESAR = new JButton();
 }
