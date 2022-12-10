@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 
 //Importar excepciones
 import java.io.IOException;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Menu extends JFrame{
     public Menu(String nombre){
@@ -38,7 +39,7 @@ public class Menu extends JFrame{
         TXT_BIENVENIDA.setFont(new Font("Segoe UI Emoji", 3, 18));
         TXT_BIENVENIDA.setText("Bienvenido(a) " + nombre + "!");
         TXT_BIENVENIDA.setBounds(0, 0, 300, 20);
-        TXT_BIENVENIDA.setForeground(new Color(255, 0, 0));
+        TXT_BIENVENIDA.setForeground(new Color(0, 0, 0));
         
         //Configurar los aspectos visuales de los botones
         BTN_USUARIOS.setFont(new Font("Segoe UI", 0, 14));
@@ -106,7 +107,7 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 try {
-                    InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
+                    InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRuta(GestorDatos.USUARIO)));
                 } catch (IOException ex) {}
                 VENTANA.dispose();
             }

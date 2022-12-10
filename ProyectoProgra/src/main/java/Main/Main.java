@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args){
         try {
-            InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRutaUsuarios()));
+            InicioSesion inicioSesion = new InicioSesion(GestorDatos.leerDatos(GestorDatos.getRuta(GestorDatos.USUARIO)));
         }
         catch (IOException ex){}
     }

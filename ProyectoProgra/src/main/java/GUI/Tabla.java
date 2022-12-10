@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class Tabla extends JFrame{
     
@@ -33,10 +34,10 @@ public class Tabla extends JFrame{
         VENTANA.setVisible(true);
         VENTANA.setLayout(new GridLayout(2, 1));
         
-        if (datosTabla.equals("inventario")){
+        if (datosTabla.equals(GestorDatos.INVENTARIO)){
             VENTANA.setTitle("Inventario");
         }
-        else if (datosTabla.equals("usuario")){
+        else if (datosTabla.equals(GestorDatos.USUARIO)){
             VENTANA.setTitle("Usuarios");
         }
         
@@ -47,25 +48,9 @@ public class Tabla extends JFrame{
         IMAGEN_FONDO.setIcon(IMAGEN);
         IMAGEN_FONDO.setBounds(0, -500, 1000, 1000);
         
-        //Configurar los vectores para almacenar los datos
-        String[] encabezado = new String[0];
-        String[][] elementosTabla = new String[0][];
-
-        //Agregar los datos a los vectores en funcion de la ventana seleccionadad por el usuario
-        if (datosTabla.equals("inventario")){
-            //Elementos del inventario
-            elementosTabla = GestorDatos.leerDatos(GestorDatos.getRutaInventario());
-
-            //Encabezado del inventario
-            encabezado = ENCABEZADO_INVENTARIO;
-        }
-        else if (datosTabla.equals("usuario")){
-            //Elementos del inventario
-            elementosTabla = GestorDatos.leerDatos(GestorDatos.getRutaUsuarios());
-
-            //Encabezado del inventario
-            encabezado = ENCABEZADO_USUARIOS;
-        }
+        //Configurar los vectores para almacenar los datos y el encabezado
+        String[] encabezado = getEncabezado(datosTabla);
+        String[][] elementosTabla = GestorDatos.leerDatos(GestorDatos.getRuta(datosTabla));
         
         //Configurar la tabla y la barra de scroll
         JTable tabla = new JTable(elementosTabla, encabezado);
@@ -108,7 +93,7 @@ public class Tabla extends JFrame{
         BTN_AGREGAR.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                EntradaDatos ventanaEntrada = new EntradaDatos(datosTabla);
+                EntradaDatos ventanaEntrada = new EntradaDatos(datosTabla, false);
                 VENTANA.dispose();
             }
         });
@@ -116,14 +101,29 @@ public class Tabla extends JFrame{
         BTN_MODIFICAR.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                
+                EntradaDatos ventanaEntrada = new EntradaDatos(datosTabla, true);
+                VENTANA.dispose();
             }
         });
         
         BTN_ELIMINIAR.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+                String id = JOptionPane.showInputDialog(null, "Ingrese el id del dato que desea eliminar");
                 
+                try {
+                    boolean datoEliminado;
+                    
+                    if (datoEliminado = GestorDatos.eliminarDatos(id, datosTabla)){
+                        JOptionPane.showMessageDialog(null, "Elemento eliminado exitosamente");
+                        VENTANA.dispose();
+                        Tabla ventanaInventario = new Tabla(GestorDatos.USUARIO);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "ID no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                catch (IOException ex){}
             }
         });
         
@@ -164,20 +164,19 @@ public class Tabla extends JFrame{
     private final JButton BTN_MODIFICAR = new JButton();
     private final JButton BTN_ELIMINIAR = new JButton();
     
-    //Encabezado de la tabla de inventario
-    private final String[] ENCABEZADO_INVENTARIO = {
-        "ID",
-        "Descripción",
-        "Cantidad",
-        "Fabricante",
-        "Precio"
-    };
-    
-    //Encabezado de la tabla de usuarios
-    private final String[] ENCABEZADO_USUARIOS = {
-        "ID",
-        "Nombre",
-        "Clave",
-        "Rol"
-    };
+    //Encabezado de la tabla
+    public static String[] getEncabezado(String tipoDato){
+        if (tipoDato.equals(GestorDatos.INVENTARIO)){
+            String[] encabezado = {"ID", "Descripción", "Cantidad", "Fabricante","Precio"};
+            return encabezado;
+        }
+        else if (tipoDato.equals(GestorDatos.USUARIO)){
+            String[] encabezado = {"ID", "Nombre", "Clave", "Rol"};
+            return encabezado;
+        }
+        else{
+            String[] encabezado = {""};
+            return encabezado;
+        }
+    }
 }

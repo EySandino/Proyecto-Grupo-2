@@ -2,6 +2,7 @@ package GUI;
 
 //Importar paquetes
 import GestorCRUD.GestorDatos;
+import Main.Helper;
 
 //Importar clases
 import java.awt.Font;
@@ -26,7 +27,40 @@ import javax.swing.JPasswordField;
 
 public class EntradaDatos extends JFrame{
     
-    public EntradaDatos(String tipoDato){
+    public EntradaDatos(String tipoDato, boolean modificar){
+        try{
+            if (modificar){
+                idElemento = JOptionPane.showInputDialog(null, "Ingrese el id del dato que desea modificar");
+                int indice = Helper.getIndice(idElemento, tipoDato);
+
+                if (indice != -1){
+                        String[][] listaDatos = GestorDatos.leerDatos(GestorDatos.getRuta(tipoDato));
+
+                        if (tipoDato.equals(GestorDatos.INVENTARIO)){
+                            CAMPO_PRECIO.setText(listaDatos[indice][4].replaceFirst("CRC", ""));
+                            CAMPO_CANTIDAD.setText(listaDatos[indice][2]);
+                            CAMPO_FABRICANTE.setText(listaDatos[indice][3]);
+                            CAMPO_DESCRIPCION.setText(listaDatos[indice][1]);
+                        }
+                        else if (tipoDato.equals(GestorDatos.USUARIO)){
+                            CAMPO_NOMBRE.setText(listaDatos[indice][1]);
+                            CAMPO_CONTRASENA.setText(listaDatos[indice][2]);
+                            CAMPO_COMPROBAR_CONTRASENA.setText(listaDatos[indice][2]);
+
+                            if (listaDatos[indice][3].equals("Vendedor")){
+                                MENU_DESPLEGUABLE.setSelectedIndex(1);
+                            }
+                        }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "ID no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                    Tabla ventanaInventario = new Tabla(tipoDato);
+                    return;
+                }
+            }
+        }
+        catch (IOException ex){}
+        
         //Configurar la ventana principal
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
         VENTANA.setResizable(false);
@@ -158,7 +192,7 @@ public class EntradaDatos extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 try {
-                    if (tipoDato.equals("inventario")){
+                    if (tipoDato.equals(GestorDatos.INVENTARIO)){
                         String fabricante = CAMPO_FABRICANTE.getText();
                         String descripcion = CAMPO_DESCRIPCION.getText();
                         int precio = Integer.parseInt(CAMPO_PRECIO.getText());
@@ -168,14 +202,20 @@ public class EntradaDatos extends JFrame{
                                 + "," + String.valueOf(cantidad)
                                 + "," + fabricante
                                 + ",CRC" + String.valueOf(precio);
-
-                        GestorDatos.crearDato("inventario", contenedor);
-                        JOptionPane.showMessageDialog(null, "Datos agregados exitosamente!", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        if (modificar){
+                            GestorDatos.modificarDato(idElemento, contenedor, GestorDatos.INVENTARIO);
+                            JOptionPane.showMessageDialog(null, "Datos actualizados exitosamente!", "Datos actualizados", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else {
+                            GestorDatos.crearDato(GestorDatos.INVENTARIO, contenedor);
+                            JOptionPane.showMessageDialog(null, "Datos agregados exitosamente!", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         
                         VENTANA.dispose();
                         Tabla ventanaInventario = new Tabla(GestorDatos.INVENTARIO);
                     }
-                    else if (tipoDato.equals("usuario")){
+                    else if (tipoDato.equals(GestorDatos.USUARIO)){
                         String nombre = CAMPO_NOMBRE.getText();
                         String rol = String.valueOf(MENU_DESPLEGUABLE.getSelectedItem());
                         String contrasena = String.valueOf(CAMPO_CONTRASENA.getPassword());
@@ -185,9 +225,15 @@ public class EntradaDatos extends JFrame{
                             String contenedor = "," + nombre
                                     + "," + contrasena
                                     + "," + rol;
-                            
-                            GestorDatos.crearDato("usuario", contenedor);
-                            JOptionPane.showMessageDialog(null, "Datos agregados exitosamente!", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
+
+                            if (modificar){
+                                GestorDatos.modificarDato(idElemento, contenedor, GestorDatos.USUARIO);
+                                JOptionPane.showMessageDialog(null, "Datos actualizados exitosamente!", "Datos actualizados", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            else {
+                                GestorDatos.crearDato(GestorDatos.USUARIO, contenedor);
+                                JOptionPane.showMessageDialog(null, "Datos agregados exitosamente!", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
+                            }
                             
                             VENTANA.dispose();
                             Tabla ventanaInventario = new Tabla(GestorDatos.USUARIO);
@@ -295,4 +341,7 @@ public class EntradaDatos extends JFrame{
     //Botones
     private final JButton BTN_ACEPTAR = new JButton();
     private final JButton BTN_SALIR = new JButton();
+    
+    //Configurar el id en caso de que se necesite
+    private static String idElemento = "";
 }

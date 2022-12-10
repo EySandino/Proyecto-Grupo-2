@@ -13,7 +13,6 @@ import java.io.FileWriter;
 
 //Import excepciones
 import java.io.IOException;
-import java.lang.RuntimeException;
 import java.io.FileNotFoundException;
 
 public class GestorDatos {
@@ -27,12 +26,16 @@ public class GestorDatos {
     private static final String RUTA_INVENTARIO = "src\\main\\java\\ArchivosCSV\\inventario.csv";
     
     //Obtener la ruta de los archivos
-    public static String getRutaUsuarios(){
-        return RUTA_USUARIOS;
-    }
-
-    public static String getRutaInventario(){
-        return RUTA_INVENTARIO;
+    public static String getRuta(String tipoDato){
+        if (tipoDato.equals(INVENTARIO)){
+            return RUTA_INVENTARIO;
+        }
+        else if (tipoDato.equals(USUARIO)){
+            return RUTA_USUARIOS;
+        }
+        else {
+            return null;
+        }
     }
     
     //Rutas de las imagenes de fondo
@@ -56,13 +59,7 @@ public class GestorDatos {
     //Crea un nuevo elemenento para ser almacenado en un archivo especifico
     public static void crearDato(String tipoDato, String atributos) throws FileNotFoundException, IOException{
         //Especificar a que tabla se desea acceder
-        String ruta = "";
-        if (tipoDato.equals("inventario")){
-            ruta = getRutaInventario();
-        }
-        else if (tipoDato.equals("usuario")){
-            ruta = getRutaUsuarios();
-        }
+        String ruta = getRuta(tipoDato);
         
         //Crear el escritor y la tabla de archivos existentes. El escritor elimina todos los elementos del archivo existente
         String[][] listaDatos = leerDatos(ruta);
@@ -139,45 +136,34 @@ public class GestorDatos {
     //Elimina un elemento existente de un archivo especifico
     public static boolean eliminarDatos(String id, String tipoDato) throws FileNotFoundException, IOException{
         //Especificar a que tabla se desea acceder
-        String ruta = "";
-        if (tipoDato.equals("inventario")){
-            ruta = getRutaInventario();
-
-        }
-        else if (tipoDato.equals("usuario")){
-            ruta = getRutaUsuarios();
-        }
+        String ruta = getRuta(tipoDato);
         
+        //Se determina cual es el elemento que se debe eliminar
+        int indiceDatoEliminado = Helper.getIndice(id, ruta);
+        
+        //Escrito y la lista de elementos existentes
         String[][] listaDatos = leerDatos(ruta);
         FileWriter escritor = new FileWriter(ruta);
-
-        //Se determina cual es el elemento que se debe eliminar
-        int indiceDatoEliminado;
-        for (int i = 0; i < listaDatos.length; i++){
-            if (id.equals(listaDatos[i][0])){
-                indiceDatoEliminado = i;
-            }
-        }
         
         //Se elimina el elemento seleccionado. En caso de que el id no coincida con ningun dato, la funciona retorna el valor false
-        try {
-            String contenedor = "";
+        String contenedor = "";
+        if (indiceDatoEliminado != -1){
             for (int i = 0; i < listaDatos.length; i++){
                 if (indiceDatoEliminado == i){
                     continue;
                 }
                 else{
                     for (int j = 0; j < listaDatos[0].length; j++){
-                        if (j == 0){
+                        if (j != 0){
                             contenedor += "," + listaDatos[i][j];
                         }
                         else {
                             contenedor += listaDatos[i][j];
                         }
-                        
-                        if (i != listaDatos.length - 1){
-                            contenedor += "\n";
-                        }
+                    }
+                    
+                    if (i != listaDatos.length - 1){
+                        contenedor += "\n";
                     }
                 }
             }
@@ -187,9 +173,64 @@ public class GestorDatos {
             escritor.close();
             return true;
         }
-        catch (RuntimeException ex){
+        else{
+            for (int i = 0; i < listaDatos.length; i++){
+                for (int j = 0; j < listaDatos[0].length; j++){
+                    if (j != 0){
+                        contenedor += "," + listaDatos[i][j];
+                    }
+                    else {
+                        contenedor += listaDatos[i][j];
+                    }
+                }
+                
+                if (i != listaDatos.length - 1){
+                    contenedor += "\n";
+                }
+            }
+            
+            escritor.write(contenedor);
+            
             escritor.close();
             return false;
         }
+    }
+
+    public static void modificarDato(String id, String atributos, String tipoDato) throws FileNotFoundException, IOException{
+        //Especificar a que tabla se desea acceder
+        String ruta = getRuta(tipoDato);
+        String[] listaAtributos = atributos.replaceFirst(",", "").split(",");
+        
+        //Escrito y la lista de elementos existentes
+        String[][] listaDatos = leerDatos(ruta);
+        FileWriter escritor = new FileWriter(ruta);
+        
+        for (int i = 0; i < listaDatos.length; i++){
+            if (id.equals(listaDatos[i][0])){
+                for (int j = 0; j < listaAtributos.length; j++){
+                    listaDatos[i][j + 1] = listaAtributos[j];
+                }
+            }
+        }
+        
+        String contenedor = "";
+        for (int i = 0; i < listaDatos.length; i++){
+            for (int j = 0; j < listaDatos[0].length; j++){
+                if (j != 0){
+                    contenedor += "," + listaDatos[i][j];
+                }
+                else {
+                    contenedor += listaDatos[i][j];
+                }
+            }
+
+            if (i != listaDatos.length - 1){
+                contenedor += "\n";
+            }
+        }
+        
+        escritor.write(contenedor);
+
+        escritor.close();
     }
 }
