@@ -75,6 +75,14 @@ public class Facturas extends JFrame {
         BTN_REGRESAR.setBackground(new Color(78,80,82));
         BTN_REGRESAR.setBorder(null);
         BTN_REGRESAR.setFocusable(false);
+        
+        BTN_ACEPTAR.setFont(new Font("Segoe UI", 0, 18));
+        BTN_ACEPTAR.setText("Aceptar");
+        BTN_ACEPTAR.setBounds(70, 434, 130, 34);
+        BTN_ACEPTAR.setForeground(new Color(187,187,187));
+        BTN_ACEPTAR.setBackground(new Color(78,80,82));
+        BTN_ACEPTAR.setBorder(null);
+        BTN_ACEPTAR.setFocusable(false);
 
         //Añadir los elementos a la VENTANA
         VENTANA.add(CAMPO_CLIENTE);
@@ -108,4 +116,5 @@ public class Facturas extends JFrame {
     private final JTextField CAMPO_CORREO = new JTextField();
 
     private final JButton BTN_REGRESAR = new JButton();
+    private final JButton BTN_ACEPTAR = new JButton();
 }
