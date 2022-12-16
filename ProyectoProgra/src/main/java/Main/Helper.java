@@ -2,10 +2,12 @@ package Main;
 
 //Importar paquetes
 import GestorCRUD.GestorDatos;
+import java.awt.TextArea;
 import java.io.IOException;
 
 //Importar clases
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class Helper {
     //Crea un ID para cuando el usuario crea un usuario o un elemento para el inventario
@@ -49,5 +51,9 @@ public class Helper {
         }
         
         return indice;
+    }
+    
+    public void imprimeMensaje(TextArea mensaje){
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 }
