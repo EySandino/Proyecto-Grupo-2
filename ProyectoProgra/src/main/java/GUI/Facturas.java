@@ -1,6 +1,7 @@
 package GUI;
 
 import GestorCRUD.GestorDatos;
+import GestorCRUD.Usuario;
 import Main.Helper;
 import java.awt.Color;
 import java.awt.Font;
@@ -90,14 +91,22 @@ public class Facturas extends JFrame {
 
         BTN_ACEPTAR.setFont(new Font("Segoe UI", 0, 18));
         BTN_ACEPTAR.setText("Aceptar");
-        BTN_ACEPTAR.setBounds(500, 380, 100, 22);
+        BTN_ACEPTAR.setBounds(70, 390, 90, 30);
         BTN_ACEPTAR.setForeground(new Color(187, 187, 187));
         BTN_ACEPTAR.setBackground(new Color(78, 80, 82));
         BTN_ACEPTAR.setBorder(null);
         BTN_ACEPTAR.setFocusable(false);
 
-        BTN_ACEPTAR.addActionListener(new ActionListener() {
+        BTN_SALIR.setFont(new Font("Segoe UI", 0, 18));
+        BTN_SALIR.setText("SALIR");
+        BTN_SALIR.setBounds(260, 390, 90, 30);
+        BTN_SALIR.setForeground(new Color(187, 187, 187));
+        BTN_SALIR.setBackground(new Color(78, 80, 82));
+        BTN_SALIR.setBorder(null);
+        BTN_SALIR.setFocusable(false);
 
+        BTN_ACEPTAR.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     GestorDatos gD = new GestorDatos();
@@ -143,6 +152,15 @@ public class Facturas extends JFrame {
 
             }
         });
+
+        BTN_SALIR.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Menu ventanaMenu = new Menu(Usuario.getNombreUsuario());
+                VENTANA.dispose();
+            }
+        });
         //        Añadir los elementos a la VENTANA    
 
         VENTANA.add(CAMPO_CLIENTE);
@@ -157,9 +175,9 @@ public class Facturas extends JFrame {
         VENTANA.add(TXT_CORREO);
         VENTANA.add(TXT_PRODUCTO);
 
-        VENTANA.add(IMAGEN_FONDO);
+        VENTANA.add(BTN_SALIR);
         VENTANA.add(BTN_ACEPTAR);
-
+        VENTANA.add(IMAGEN_FONDO);
 //      VENTANA.add(PANEL);
     }
     //Crear factura y de clarar variables.
@@ -184,5 +202,6 @@ public class Facturas extends JFrame {
     private final JTextField CAMPO_CORREO = new JTextField();
     private final JTextField CAMPO_PRODUCTO = new JTextField();
     private final JButton BTN_ACEPTAR = new JButton();
+    private final JButton BTN_SALIR = new JButton();
 
 }
