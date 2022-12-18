@@ -36,10 +36,10 @@ public class Helper {
     }
     
     //Retorna el valor de indice del id ingresado. Retorna -1 si no encuentra ningun valor
-    public static int getIndice(String id, String tipoDato) throws IOException{
+    public static int getIndice(String id, String ruta) throws IOException{
         int indice = -1;
         
-        String[][] listaDatos = GestorDatos.leerDatos(GestorDatos.getRuta(tipoDato));
+        String[][] listaDatos = GestorDatos.leerDatos(ruta);
 
         for (int i = 0; i < listaDatos.length; i++){
             if (id.equals(listaDatos[i][0])){
