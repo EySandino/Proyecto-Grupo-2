@@ -54,15 +54,15 @@ public class Helper {
         return indice;
     }
     
-    public void imprimeMensaje(TextArea mensaje){
+    public static void imprimeMensaje(TextArea mensaje){
         JOptionPane.showMessageDialog(null, mensaje);
     }
     
-    public void limpiarProductos(){
-        Facturas.productos;
+    public static void limpiarProductos(){
+        Facturas.productos = "";
     }
     
-    public void limpiarPrecios(){
-        
+    public static void limpiarPrecios(){
+        Facturas.precios = "";
     }
 }

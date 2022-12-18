@@ -85,12 +85,13 @@ public class Menu extends JFrame{
             }
         });
         
-//        BTN_FACTURA.addActionListener(new ActionListener(){
-//            @Override
-//            public void actionPerformed(ActionEvent e){
-//                Facturas ventanaFactura = new Facturas();
-//            }
-//        });
+        BTN_FACTURA.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                Facturas ventanaFactura = new Facturas();
+                VENTANA.dispose();
+            }
+        });
         
         BTN_INVENTARIO.addActionListener(new ActionListener(){
             @Override

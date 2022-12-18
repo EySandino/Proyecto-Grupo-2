@@ -18,12 +18,13 @@ import javax.swing.JTextField;
 
 public class Facturas extends JFrame {
 
-    public static String productos;
-    public static int precios[];
+    public static String productos = "";
+    public static String precios = "";
 
     public Facturas() {
-
-        Helper clsH = new Helper();
+        Helper.limpiarProductos();
+        Helper.limpiarPrecios();
+        
         String factura = "";
         //Creación de la ventana
         VENTANA.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -118,30 +119,40 @@ public class Facturas extends JFrame {
 
         BTN_AGREGAR.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 try {
-                    GestorDatos gD = new GestorDatos();
-                    String precioTexto = "";
-                    int precio = 0;
+                    int precioProducto = 0;
+                    String nombreProducto = "";
 
                     String producto = CAMPO_PRODUCTO.getText();
 
-                    String[][] Datos = gD.leerDatos(gD.getRuta(gD.INVENTARIO));
+                    String[][] datos = GestorDatos.leerDatos(GestorDatos.getRuta(GestorDatos.INVENTARIO));
 
-                    for (int i = 0; i < Datos.length; i++) {
-                        if (Datos[i][1].equalsIgnoreCase(producto)) { //dentro de los paréntesis poner el nombre del producto que desea buscar el precio
-                            precioTexto = Datos[i][4];
+                    for (int i = 0; i < datos.length; i++) {
+                        if (datos[i][0].equals(producto)) {
+                            precioProducto = Integer.parseInt(datos[i][4].replaceFirst("CRC", ""));
+                            nombreProducto = datos[i][1];
                             break;
                         }
                     }
-                    producto += productos[0];
-                    precioTexto = precioTexto.substring(3, precioTexto.length());
-                    precio = Integer.parseInt(precioTexto);
-                    precio += precios[0];
+                    
+                    if (productos.equals("")){
+                        productos += nombreProducto;
+                    }
+                    else {
+                        productos += "\n" + nombreProducto;
+                    }
 
-                } catch (IOException ex) {
+                    if (precios.equals("")){
+                        precios += precioProducto;
+                    }
+                    else {
+                        precios += "\n" + precioProducto;
+                    }
                 }
-
+                catch (IOException ex) {}
+                
+                CAMPO_PRODUCTO.setText("Ingrese otro valor");
             }
         });
 
@@ -149,8 +160,7 @@ public class Facturas extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
-                    String factura = "";
+                    String separador = "-".repeat(75);
                     int numFact = 1;
                     int precio = 0;
                     float IVA = 0.13f, Total = 0.0f;
@@ -160,43 +170,48 @@ public class Facturas extends JFrame {
                     String identificacion = CAMPO_ID.getText();
                     String telefono = CAMPO_TELEFONO.getText();
                     String correo = CAMPO_CORREO.getText();
-                    GestorDatos gD = new GestorDatos();
-                    String precioTexto = "";
 
-                    String[][] Datos = gD.leerDatos(gD.getRuta(gD.INVENTARIO));
-
-                    for (int i = 0; i < Datos.length; i++) {
-                        if (Datos[i][1].equalsIgnoreCase(producto)) { //dentro de los paréntesis poner el nombre del producto que desea buscar el precio
-                            precioTexto = Datos[i][4];
-
-                            break;
-                        }
-                    }
-
-                    precioTexto = precioTexto.substring(3, precioTexto.length());
-                    precio = Integer.parseInt(precioTexto);
+                    String[][] Datos = GestorDatos.leerDatos(GestorDatos.getRuta(GestorDatos.INVENTARIO));
 
                     Total = precio * IVA;
 
                     numFact = (int) (Math.random() * (9999999 - 10000 + 1)) * 10000;
-                    factura += "Factura #" + numFact + "\n";
-                    factura += "Nombre Cliente: " + nombre + "\n";
-                    factura += "Identificación: " + identificacion + "\n";
-                    factura += "Numero de Telefono: " + telefono + "\n";
-                    factura += "Correo Electrónico: " + correo + "\n";
-                    factura += "---------------------------------------------------------------------------\n";
-                    factura += "Descripcion\t\tMonto\n";
-                    factura += "---------------------------------------------------------------------------\n";
-                    factura += producto + "\t\t" + precio + "\n";
-                    factura += "---------------------------------------------------------------------------\n";
-                    factura += "Iva\t\t\t" + IVA + "\n";
-                    factura += "Total\t\t\t" + Total + "\n";
+                    
+                    String header = "Factura #" + numFact
+                            + "\nNombre Cliente: " + nombre
+                            + "\nIdentificación: " + identificacion
+                            + "\nNumero de Telefono: " + telefono
+                            + "\nCorreo Electrónico: " + correo + "\n"
+                            + separador
+                            + "\nDescripcion\t\tMonto\n"
+                            + separador + "\n";
+                    
+                    String body = "";
+                    
+                    String[] listaProductos = productos.split("\n");
+                    String[] listaPrecios = precios.split("\n");
+                    
+                    for (int i = 0; i < listaProductos.length; i++){
+                        if (body.equals("")){
+                            body += listaProductos[i] + "\t\t" + listaPrecios[i];
+                        }
+                        else{
+                            body += "\n" + listaProductos[i] + "\t\t" + listaPrecios[i];
+                        }
+                    }
+                    
+                    String footer = "\n" + separador
+                           + "\nIva\t\t\t" + IVA
+                           + "\nTotal\t\t\t" + Total;
 
-                    clsH.imprimeMensaje(new TextArea(factura));
-//                return precio;
-                } catch (IOException ex) {
+                    String factura = header + body + footer;
+
+                    Helper.imprimeMensaje(new TextArea(factura));
                 }
-
+                catch (IOException ex) {}
+                
+                VENTANA.dispose();
+                Facturas ventanaFacturas = new Facturas();
             }
         });
 
