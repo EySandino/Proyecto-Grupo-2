@@ -1,6 +1,7 @@
 package Main;
 
 //Importar paquetes
+import GUI.Facturas;
 import GestorCRUD.GestorDatos;
 import java.awt.TextArea;
 import java.io.IOException;
@@ -55,5 +56,13 @@ public class Helper {
     
     public void imprimeMensaje(TextArea mensaje){
         JOptionPane.showMessageDialog(null, mensaje);
+    }
+    
+    public void limpiarProductos(){
+        Facturas.productos;
+    }
+    
+    public void limpiarPrecios(){
+        
     }
 }
